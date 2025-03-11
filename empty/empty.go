@@ -60,10 +60,5 @@ func Any(values ...any) bool {
 
 // All returns true if all of the given values are empty.
 func All(values ...any) bool {
-	for _, value := range values {
-		if IsNot(value) {
-			return false
-		}
-	}
-	return true
+	return !slices.ContainsFunc(values, IsNot)
 }
