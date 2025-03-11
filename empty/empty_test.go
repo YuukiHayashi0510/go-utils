@@ -171,7 +171,61 @@ func TestAny(t *testing.T) {
 	}
 }
 
-// TODO: implement
 func TestAll(t *testing.T) {
+	tests := map[string]struct {
+		values []any
+		want   bool
+	}{
+		"all empty": {
+			values: []any{"", 0, []int(nil), map[string]int(nil)},
+			want:   true,
+		},
+		"some empty": {
+			values: []any{"", 0, []int{1}},
+			want:   false,
+		},
+		"none empty": {
+			values: []any{"hello", 1, []int{1}, map[string]int{"a": 1}},
+			want:   false,
+		},
+		"empty values": {
+			values: []any{},
+			want:   true,
+		},
+		"nil value": {
+			values: nil,
+			want:   true,
+		},
+		"mixed types": {
+			values: []any{
+				"",               // empty string
+				0,                // zero int
+				[]int{},          // empty slice
+				map[string]int{}, // empty map
+				(*struct{})(nil), // nil pointer
+				any(nil),         // nil interface
+				make(chan int),   // empty channel
+			},
+			want: true,
+		},
+		"all non-empty mixed types": {
+			values: []any{
+				"hello",                // non-empty string
+				1,                      // non-zero int
+				[]int{1},               // non-empty slice
+				map[string]int{"a": 1}, // non-empty map
+				&struct{}{},            // non-nil pointer
+				any("hello"),           // non-nil interface
+			},
+			want: false,
+		},
+	}
 
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
+			if got := empty.All(tt.values...); got != tt.want {
+				t.Errorf("All(%v) = %v, want %v", tt.values, got, tt.want)
+			}
+		})
+	}
 }

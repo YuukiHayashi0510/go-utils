@@ -1,7 +1,6 @@
 package empty
 
 import (
-	"fmt"
 	"reflect"
 	"slices"
 )
@@ -34,13 +33,12 @@ func Is(value any) bool {
 		return v.Float() == 0
 	case reflect.Interface, reflect.Ptr:
 		return v.IsNil()
-	case reflect.Map, reflect.Slice:
+	case reflect.Map, reflect.Slice, reflect.Chan:
 		if v.IsNil() {
 			return true
 		}
 		return v.Len() == 0
 	default:
-		fmt.Println("default")
 		return false
 	}
 }
@@ -62,5 +60,10 @@ func Any(values ...any) bool {
 
 // All returns true if all of the given values are empty.
 func All(values ...any) bool {
-	return !slices.ContainsFunc(values, IsNot)
+	for _, value := range values {
+		if IsNot(value) {
+			return false
+		}
+	}
+	return true
 }
