@@ -1,3 +1,3 @@
 module github.com/YuukiHayashi0510/go-utils
 
-go 1.24.0
+go 1.19
