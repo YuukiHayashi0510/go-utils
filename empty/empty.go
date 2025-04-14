@@ -55,6 +55,10 @@ func IsNot(value any) bool {
 // - empty containers (empty slice, empty map)
 // If no values are provided, returns false.
 func Any(values ...any) bool {
+	if len(values) == 0 {
+		return false
+	}
+
 	return slices.ContainsFunc(values, Is)
 }
 
