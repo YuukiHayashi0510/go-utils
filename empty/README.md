@@ -6,5 +6,5 @@ Inspired by Dart method `IsEmpty` and `IsNotEmpty`.
 ## Install
 
 ```bash
-go get github.com/YuukiHayashi0510/go-utils/empty
+go get github.com/YuukiHayashi0510/gouse/empty
 ```

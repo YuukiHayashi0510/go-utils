@@ -3,7 +3,7 @@ package empty_test
 import (
 	"testing"
 
-	"github.com/YuukiHayashi0510/go-utils/empty"
+	"github.com/YuukiHayashi0510/gouse/empty"
 )
 
 func TestIs(t *testing.T) {
